@@ -1,0 +1,109 @@
+﻿<script type="text/javascript">
+
+
+    function testController($scope, $http, $cookies) {
+
+        $scope.token = '';
+        $scope.claims = [];
+        $scope.error = '';
+        $scope.client_id = 'MyMerchandisingServices';
+
+        $scope.getToken = function () {
+
+            var data = {
+                client_id: $scope.client_id,
+                grant_type: 'client_credentials',
+                scope: 'scope1 scope2 scope3'
+
+            };
+
+            $http({
+                method: 'POST',
+                url: 'http://localhost:3036/Token',
+                data: data,
+                transformRequest: function (obj) {
+                    var str = [];
+                    for (var p in obj)
+                        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+                    return str.join("&");
+                },
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).success(function (data) {
+                $scope.token = data.access_token;
+            })
+            .error(function (status) {
+                $scope.error = "Unable to get token - status " + status.error;
+                $scope.token = "Unable to get token - status " + status.error;
+            });
+
+
+        };
+
+        $scope.getClaims = function () {
+
+            $http({
+                method: 'GET',
+                url: '/api/values',
+                headers: { 'Authorization': 'Bearer ' + $scope.token }
+            }).success(function (data) {
+                $scope.claims = data;
+            })
+            .error(function (data) {
+                $scope.claims = "Unable to get claims.";
+            });
+
+
+        };
+
+        $scope.callResource2 = function () {
+
+            $http({
+                method: 'PUT',
+                url: 'http://localhost:34154/api/Resource2',
+                headers: { 'Authorization': 'Bearer ' + $scope.token }
+            }).success(function (data) {
+                $scope.resource2 = data;
+            }).error(function (data) {
+                $scope.resource2 = "Error - " + data.error;
+            });
+
+        };
+
+    };
+
+
+</script>
+
+
+<div ng-controller="testController">
+    <div class="jumbotron">
+        <h1>AZURE CORS and OAUTH2</h1>
+        <h3>Play nice together?</h3>
+        <h2>{{error}}</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <button ng-click="getToken()">Get a token</button>
+            Client ID : <input ng-model="client_id" />
+            <div ng-show="token">
+                Token:
+                <pre>{{token}}</pre>
+            </div>
+        </div>
+        <div class="col-md-4" ng-show="token">
+            <button ng-click="getClaims()">Get my oauth claims</button>
+            <pre>{{claims}}</pre>
+        </div>
+        <div class="col-md-4" ng-show="token">
+            <button ng-click="callResource2()">Get resource2</button>
+            <pre>{{resource2}}</pre>
+            <div ng-show="resource2error">
+                {{resource2error}}
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+
+</div>
