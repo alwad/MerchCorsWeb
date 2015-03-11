@@ -59,7 +59,7 @@
 
             $http({
                 method: 'PUT',
-                url: 'http://localhost:34154/api/Resource2',
+                url: 'http://merchcorsapi.azurewebsites.net/api/Resource2',
                 headers: { 'Authorization': 'Bearer ' + $scope.token }
             }).success(function (data) {
                 $scope.resource2 = data;
