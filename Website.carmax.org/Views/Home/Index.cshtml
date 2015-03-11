@@ -55,7 +55,7 @@
 
         };
 
-        $scope.callResource2 = function () {
+        $scope.putResource2 = function () {
 
             $http({
                 method: 'PUT',
@@ -68,6 +68,21 @@
             });
 
         };
+
+        $scope.getResource2 = function () {
+
+            $http({
+                method: 'GET',
+                url: 'http://merchcorsapi.azurewebsites.net/api/Resource2',
+                headers: { 'Authorization': 'Bearer ' + $scope.token }
+            }).success(function (data) {
+                $scope.resource2 = data;
+            }).error(function (data) {
+                $scope.resource2 = "Error - " + data.error;
+            });
+
+        };
+
 
     };
 
@@ -95,7 +110,8 @@
             <pre>{{claims}}</pre>
         </div>
         <div class="col-md-4" ng-show="token">
-            <button ng-click="callResource2()">Get resource2</button>
+            <button ng-click="putResource2()">PUT resource2</button>
+            <button ng-click="getResource2()">GET resource2</button>
             <pre>{{resource2}}</pre>
             <div ng-show="resource2error">
                 {{resource2error}}
