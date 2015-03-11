@@ -33,10 +33,7 @@ namespace Website.carmax.org
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
                 AccessTokenExpireTimeSpan = TimeSpan.FromHours(1)
-
-#if DEBUG
                 ,AllowInsecureHttp = true
-#endif
             };
 
             // Enable the application to use bearer tokens to authenticate users
