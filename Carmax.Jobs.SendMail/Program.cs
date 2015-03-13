@@ -14,6 +14,10 @@ namespace Carmax.Jobs.SendMail
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
+            JobHostConfiguration config = new JobHostConfiguration();
+
+            config.ServiceBusConnectionString = "Endpoint=sb://codestrike.servicebus.windows.net/;SharedAccessKeyName=submitter;SharedAccessKey=tFXZ7Ms+Y3JKE+MTt/5p8065au4y0U1eQ20V3quQVU0=";
+
             var host = new JobHost();
             // The following code ensures that the WebJob will be running continuously
             host.RunAndBlock();
