@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8D63A4
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carmax.Jobs.SendMail", "Carmax.Jobs.SendMail\Carmax.Jobs.SendMail.csproj", "{81F12E4A-0097-4F31-8AE7-23E538A7D0CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,6 +24,10 @@ Global
 		{EAA8EED0-3958-42EC-8B13-A00E2E40E2B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EAA8EED0-3958-42EC-8B13-A00E2E40E2B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EAA8EED0-3958-42EC-8B13-A00E2E40E2B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81F12E4A-0097-4F31-8AE7-23E538A7D0CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81F12E4A-0097-4F31-8AE7-23E538A7D0CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81F12E4A-0097-4F31-8AE7-23E538A7D0CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81F12E4A-0097-4F31-8AE7-23E538A7D0CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
