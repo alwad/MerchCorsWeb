@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace Carmax.Jobs.SendMail
 {
@@ -20,11 +21,17 @@ namespace Carmax.Jobs.SendMail
 
             JobHostConfiguration config = new JobHostConfiguration();
 
-            
-            config.ServiceBusConnectionString = "Endpoint=sb://codestrike.servicebus.windows.net/;SharedAccessKeyName=submitter;SharedAccessKey=tFXZ7Ms+Y3JKE+MTt/5p8065au4y0U1eQ20V3quQVU0=";
+            config.Queues.BatchSize = 16;
+            config.Queues.MaxDequeueCount = 4;
+            config.Queues.MaxPollingInterval = TimeSpan.FromSeconds(240);
+        
 
             //while (Console.ReadKey().KeyChar != 'q')
+            //{
             //    EnqeueMessage();
+            //    WriteEmailMessage();
+            //    Console.WriteLine("message queued - 'q' to exit");
+            //}
 
             var host = new JobHost();
             host.RunAndBlock();
@@ -44,5 +51,22 @@ namespace Carmax.Jobs.SendMail
 
             
         }
+
+        private static void WriteEmailMessage()
+        {
+
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=merchjobs;AccountKey=Y3mhdW77BfQxgdTswDNGR7s4Z5URldp8DPwmCBBUoXU4Avna+12dkDP7xzzeIMaB2GNyKG2Zj+ldR2F4T09HsQ==");
+            var client = storageAccount.CreateCloudBlobClient();
+            var blobs = client.GetContainerReference("email");
+            blobs.CreateIfNotExists();
+            
+            var blob = blobs.GetBlockBlobReference(Guid.NewGuid().ToString());
+            
+            byte[] byteArray = Encoding.UTF8.GetBytes("test test 123");
+            blob.UploadFromStream(new MemoryStream(byteArray));
+
+
+        }
+
     }
 }
